@@ -13,6 +13,11 @@
    uvicorn main:app --reload --host 0.0.0.0 --port 8000
    ```
 
+   백그라운드에서 계속 실행하려면 `nohup`을 사용할 수 있습니다.
+   ```bash
+   nohup uvicorn main:app --host 0.0.0.0 --port 8000 >/tmp/uvicorn.log 2>&1 &
+   ```
+
 3. API 호출 예시
    ```bash
    curl -X POST "http://localhost:8000/generate" \
