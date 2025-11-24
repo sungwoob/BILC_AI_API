@@ -8,20 +8,15 @@ class PromptRequest(BaseModel):
     prompt: str = Field(..., description="입력 프롬프트 문자열")
 
 
-class PromptResponse(BaseModel):
-    prompt: str
-    length: int
-
-
-@app.post("/generate", response_model=PromptResponse)
-def generate_response(body: PromptRequest) -> PromptResponse:
+@app.post("/generate")
+def generate_response(body: PromptRequest) -> dict[str, int | str]:
     """프롬프트 문자열을 받아 간단한 JSON 결과를 반환합니다."""
 
     content = body.prompt.strip()
     if not content:
         raise HTTPException(status_code=400, detail="prompt must not be empty")
 
-    return PromptResponse(prompt=content, length=len(content))
+    return {"prompt": content, "length": len(content)}
 
 
 @app.get("/health")
